@@ -198,3 +198,26 @@ class SECUtils:
                 f.write(section_text)
 
         return section_text
+
+def get_annual_report(
+        self,
+        ticker: Annotated[str, "ticker symbol"],
+        year: Annotated[int, "year of the annual report"],
+    ) -> str:
+        """
+        Fetches the most recent annual report (10-K) for a given ticker and year and returns its content as text.
+        """
+        start_date = f"{year-1}-12-31"
+        end_date = f"{year}-12-31"
+        metadata = self.get_10k_metadata(ticker, start_date, end_date)
+        if metadata:
+            report_url = metadata["linkToFilingDetails"]
+            report_text = self.get_10k_section(
+                ticker_symbol=ticker,
+                fyear=str(year),
+                section=1,
+                report_address=report_url,
+            )
+            return report_text
+        else:
+            return f"No 10-K filing found for {ticker} in {year}"

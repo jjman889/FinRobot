@@ -1,6 +1,8 @@
 from autogen import register_function, ConversableAgent
 from .data_source import *
 from .functional.coding import CodingUtils
+from .functional.financial_analysis import calculate_financial_ratios
+from .functional.text_analysis import analyze_text
 
 from typing import List, Callable
 from functools import wraps
@@ -55,6 +57,18 @@ def register_code_writing(caller: ConversableAgent, executor: ConversableAgent):
     """Register code writing tools."""
 
     register_toolkits(
+register_tookits_from_cls(caller, executor, SECUtils)
+register_tookits_from_cls(caller, executor, SECUtils)
+{
+                "function": analyze_text,
+                "name": "analyze_text",
+                "description": "Analyzes the text of a document, performing sentiment analysis and keyword extraction.",
+            },
+{
+                "function": calculate_financial_ratios,
+                "name": "calculate_financial_ratios",
+                "description": "Calculates key financial ratios from a company's financial data.",
+            },
         [
             {
                 "function": CodingUtils.list_dir,
